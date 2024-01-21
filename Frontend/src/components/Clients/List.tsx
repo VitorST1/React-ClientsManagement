@@ -1,8 +1,9 @@
+import { useState } from "react"
 import { Client } from "../../types/types"
 import ClientInfo from "./ClientInfo"
 
 export default function List() {
-	const clients: Client[] = [
+	const [clients, setClients] = useState<Client[]>([
 		{
 			id: 1,
 			name: "Vitor",
@@ -19,7 +20,18 @@ export default function List() {
 			coordinateX: 0,
 			coordinateY: 2,
 		},
-	]
+	])
+
+	const handleClientChange = (newClient: Client) => {
+		const index = clients.findIndex((client) => client.id === newClient.id)
+		if (index !== -1) {
+			setClients((prevClients) => [
+				...prevClients.slice(0, index),
+				newClient,
+				...prevClients.slice(index + 1),
+			])
+		}
+	}
 
 	return (
 		<div className="overflow-auto p-8">
@@ -30,7 +42,7 @@ export default function List() {
 				<div>Coordenadas</div>
 			</div>
 			{clients.map((client) => (
-				<ClientInfo key={client.id} client={client} />
+				<ClientInfo key={client.id} client={client} onClientChange={handleClientChange} />
 			))}
 		</div>
 	)

@@ -22,7 +22,7 @@ export default function Header() {
 	const addClient = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		console.log({ name, email, phone, coordinateX, coordinateY })
-		if (!name || !coordinateX || !coordinateY) return false
+		if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
 		closeModal()
 	}
 
@@ -192,6 +192,7 @@ export default function Header() {
 													Cadastrar
 												</button>
 												<button
+													type="button"
 													className="rounded-md bg-red-500 px-6 py-2 text-slate-50 hover:bg-red-600"
 													onClick={closeModal}
 												>
