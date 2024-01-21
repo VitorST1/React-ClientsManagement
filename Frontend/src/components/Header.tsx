@@ -39,24 +39,7 @@ export default function Header() {
 
 	const getClosestRoute = () => {}
 
-	const clients: Client[] = [
-		{
-			id: 1,
-			name: "Vitor",
-			email: "vitor@email.com",
-			phone: "553299999999",
-			coordinateX: 0,
-			coordinateY: 1,
-		},
-		{
-			id: 2,
-			name: "Nome",
-			email: "Email",
-			phone: "Telefone",
-			coordinateX: 0,
-			coordinateY: 2,
-		},
-	]
+	const clients: Client[] = []
 
 	return (
 		<>
@@ -282,15 +265,23 @@ export default function Header() {
 										</button>
 									</Dialog.Title>
 									<div className="p-4">
-										<div className="grid grid-cols-4 items-center gap-4 rounded rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
-											<div>Nome</div>
-											<div>Email</div>
-											<div>Telefone</div>
-											<div>Coordenadas</div>
-										</div>
-										{clients.map((client) => (
-											<ClientInfo key={client.id} client={client} hideEditButton={true} />
-										))}
+										{!clients.length ? (
+											<div className="p-8 text-center text-slate-500">
+												Nenhum cliente encontrado!
+											</div>
+										) : (
+											<>
+												<div className="grid grid-cols-4 items-center gap-4 rounded rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
+													<div>Nome</div>
+													<div>Email</div>
+													<div>Telefone</div>
+													<div>Coordenadas</div>
+												</div>
+												{clients.map((client) => (
+													<ClientInfo key={client.id} client={client} hideEditButton={true} />
+												))}
+											</>
+										)}
 									</div>
 								</Dialog.Panel>
 							</Transition.Child>

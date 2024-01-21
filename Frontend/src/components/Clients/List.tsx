@@ -33,9 +33,16 @@ export default function List() {
 		}
 	}
 
+	if (!clients.length)
+		return (
+			<div className="m-8 rounded-md border p-8 text-center text-slate-500">
+				Nenhum cliente encontrado!
+			</div>
+		)
+
 	return (
 		<div className="overflow-auto p-8">
-			<div className="grid grid-cols-5 items-center gap-4 rounded rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
+			<div className="grid grid-cols-5 items-center gap-4 rounded-md rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
 				<div>Nome</div>
 				<div>Email</div>
 				<div>Telefone</div>
