@@ -1,19 +1,16 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
+import { Client } from "../../types/types"
 
-export default function Client(props: {
-	name: string
-	email: string
-	phone: string
-	coordinateX: number
-	coordinateY: number
-}) {
+export default function ClientInfo(props: { client: Client }) {
+	const client = props.client
+
 	return (
 		<div className="grid grid-cols-5 items-center gap-4 border border-t-0 p-5 text-slate-800 last:rounded-b  hover:bg-slate-50/50">
-			<div className="line-clamp-1">{props.name}</div>
-			<div className="line-clamp-1">{props.email}</div>
-			<div className="line-clamp-1">{props.phone}</div>
+			<div className="line-clamp-1">{client.name}</div>
+			<div className="line-clamp-1">{client.email}</div>
+			<div className="line-clamp-1">{client.phone}</div>
 			<div className="line-clamp-1">
-				({props.coordinateX},{props.coordinateY})
+				({client.coordinateX},{client.coordinateY})
 			</div>
 			<div className="justify-self-end rounded">
 				<div className="relative">

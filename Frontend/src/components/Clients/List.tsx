@@ -1,7 +1,8 @@
-import Client from "./Client"
+import { Client } from "../../types/types"
+import ClientInfo from "./ClientInfo"
 
 export default function List() {
-	const clients = [
+	const clients: Client[] = [
 		{
 			id: 1,
 			name: "Vitor",
@@ -29,14 +30,7 @@ export default function List() {
 				<div>Coordenadas</div>
 			</div>
 			{clients.map((client) => (
-				<Client
-					key={client.id}
-					name={client.name}
-					email={client.email}
-					phone={client.phone}
-					coordinateX={client.coordinateX}
-					coordinateY={client.coordinateY}
-				/>
+				<ClientInfo key={client.id} client={client} />
 			))}
 		</div>
 	)
