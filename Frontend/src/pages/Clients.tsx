@@ -4,11 +4,9 @@ import Header from "../components/Header"
 export default function Clients() {
 	return (
 		<>
-			<div className="flex flex-col">
+			<div className="flex max-h-screen flex-col">
 				<Header />
-				<div className="m-5 rounded-md border">
-					<List />
-				</div>
+				<List />
 			</div>
 		</>
 	)

@@ -16,7 +16,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="grid grid-cols-2 items-center gap-5 bg-slate-800 p-5">
+			<header className="grid grid-cols-2 items-center gap-5 bg-slate-800 px-8 py-5">
 				<h2 className="text-2xl font-semibold text-slate-50">Gerenciamento de Clientes</h2>
 				<div className="flex items-center justify-end gap-5">
 					{filterActive ? (
