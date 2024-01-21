@@ -19,7 +19,7 @@ export default function List() {
 	]
 
 	return (
-		<div className="overflow-y-auto p-8">
+		<div className="overflow-auto p-8">
 			<div className="grid grid-cols-5 items-center gap-4 rounded rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
 				<div>Nome</div>
 				<div>Email</div>

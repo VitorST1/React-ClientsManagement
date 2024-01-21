@@ -16,7 +16,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="grid grid-cols-2 items-center gap-5 bg-slate-800 px-8 py-5">
+			<header className="grid grid-cols-2 items-center gap-5 bg-indigo-600 px-8 py-5">
 				<h2 className="text-2xl font-semibold text-slate-50">Gerenciamento de Clientes</h2>
 				<div className="flex items-center justify-end gap-5">
 					{filterActive ? (
@@ -46,7 +46,7 @@ export default function Header() {
 									className="w-full px-6 py-2 outline-offset-0"
 									placeholder="Pesquisar"
 								/>
-								<button className="rounded-md rounded-s-none border-s border-s-slate-300 bg-white px-3 py-2 hover:bg-slate-300">
+								<button className="rounded-md rounded-s-none border-s border-s-slate-300 bg-slate-200 px-3 py-2 hover:bg-slate-300">
 									<Icon className="text-2xl text-slate-800" icon="mdi:search" />
 								</button>
 							</div>
@@ -58,7 +58,7 @@ export default function Header() {
 					)}
 
 					<button
-						className="rounded-md bg-slate-300 px-6 py-2 text-slate-800 hover:bg-slate-400"
+						className="rounded-md bg-blue-400 px-6 py-2 text-slate-50 hover:bg-blue-500"
 						onClick={openModal}
 					>
 						Cadastrar
