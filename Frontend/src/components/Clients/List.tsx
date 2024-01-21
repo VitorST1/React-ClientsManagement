@@ -40,6 +40,7 @@ export default function List() {
 				<div>Email</div>
 				<div>Telefone</div>
 				<div>Coordenadas</div>
+				<div className="justify-self-end">Editar</div>
 			</div>
 			{clients.map((client) => (
 				<ClientInfo key={client.id} client={client} onClientChange={handleClientChange} />

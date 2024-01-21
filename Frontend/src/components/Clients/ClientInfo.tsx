@@ -5,7 +5,8 @@ import { useState, Fragment, FormEvent } from "react"
 
 export default function ClientInfo(props: {
 	client: Client
-	onClientChange: (client: Client) => void
+	hideEditButton?: boolean
+	onClientChange?: (client: Client) => void
 }) {
 	const client = props.client
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -27,39 +28,45 @@ export default function ClientInfo(props: {
 		event.preventDefault()
 		console.log({ name, email, phone, coordinateX, coordinateY })
 		if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
-		props.onClientChange({
-			...client,
-			name,
-			email,
-			phone,
-			coordinateX,
-			coordinateY,
-		})
+
+		if (props.onClientChange)
+			props.onClientChange({
+				...client,
+				name,
+				email,
+				phone,
+				coordinateX,
+				coordinateY,
+			})
 		closeEditModal()
 	}
 
 	return (
 		<>
-			<div className="grid grid-cols-5 items-center gap-4 border border-t-0 p-5 text-slate-800 last:rounded-b  hover:bg-slate-50/50">
+			<div
+				className={`grid items-center gap-4 border border-t-0 p-5 text-slate-800 last:rounded-b  hover:bg-slate-50/50 ${props.hideEditButton ? "grid-cols-4" : "grid-cols-5"}`}
+			>
 				<div className="line-clamp-1">{client.name}</div>
 				<div className="line-clamp-1">{client.email}</div>
 				<div className="line-clamp-1">{client.phone}</div>
 				<div className="line-clamp-1">
 					({client.coordinateX},{client.coordinateY})
 				</div>
-				<div className="justify-self-end rounded">
-					<div className="relative">
-						<button
-							className="group relative rounded bg-indigo-500 p-2 hover:bg-indigo-600"
-							onClick={openEditModal}
-						>
-							<Icon className="text-2xl text-slate-50" icon="mdi:pencil-box-outline" />
-							<div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 w-max -translate-x-1/2 rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm text-white opacity-0 group-hover:opacity-100">
-								Editar
-							</div>
-						</button>
+				{!props.hideEditButton && (
+					<div className="justify-self-end rounded">
+						<div className="relative">
+							<button
+								className="group relative rounded bg-indigo-500 p-2 hover:bg-indigo-600"
+								onClick={openEditModal}
+							>
+								<Icon className="text-2xl text-slate-50" icon="mdi:pencil-box-outline" />
+								<div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 w-max -translate-x-1/2 rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm text-white opacity-0 group-hover:opacity-100">
+									Editar
+								</div>
+							</button>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 			<Transition appear show={isEditModalOpen} as={Fragment}>
 				<Dialog as="div" className="relative z-10" onClose={closeEditModal}>

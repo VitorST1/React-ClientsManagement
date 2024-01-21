@@ -1,36 +1,68 @@
 import { useState, Fragment, FormEvent } from "react"
 import { Icon } from "@iconify/react"
 import { Dialog, Transition } from "@headlessui/react"
+import { Client } from "../types/types"
+import ClientInfo from "./Clients/ClientInfo"
 
 export default function Header() {
 	const [filterActive, setFilterActive] = useState(false)
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+	const [isClosestRouteModalOpen, setIsClosestRouteModalOpen] = useState(false)
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
 	const [phone, setPhone] = useState("")
 	const [coordinateX, setCoordinateX] = useState(0)
 	const [coordinateY, setCoordinateY] = useState(0)
 
-	const openModal = () => {
-		setIsModalOpen(true)
+	const openAddModal = () => {
+		setIsAddModalOpen(true)
 	}
 
-	const closeModal = () => {
-		setIsModalOpen(false)
+	const closeAddModal = () => {
+		setIsAddModalOpen(false)
+	}
+
+	const openClosestRouteModal = () => {
+		setIsClosestRouteModalOpen(true)
+	}
+
+	const closeClosestRouteModal = () => {
+		setIsClosestRouteModalOpen(false)
 	}
 
 	const addClient = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		console.log({ name, email, phone, coordinateX, coordinateY })
 		if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
-		closeModal()
+		closeAddModal()
 	}
+
+	const getClosestRoute = () => {}
+
+	const clients: Client[] = [
+		{
+			id: 1,
+			name: "Vitor",
+			email: "vitor@email.com",
+			phone: "553299999999",
+			coordinateX: 0,
+			coordinateY: 1,
+		},
+		{
+			id: 2,
+			name: "Nome",
+			email: "Email",
+			phone: "Telefone",
+			coordinateX: 0,
+			coordinateY: 2,
+		},
+	]
 
 	return (
 		<>
-			<header className="grid grid-cols-2 items-center gap-5 bg-indigo-600 px-8 py-5">
+			<header className="grid grid-cols-4 items-center gap-5 bg-indigo-600 px-8 py-5">
 				<h2 className="text-2xl font-semibold text-slate-50">Gerenciamento de Clientes</h2>
-				<div className="flex items-center justify-end gap-5">
+				<div className="col-span-3 flex items-center justify-end gap-5">
 					{filterActive ? (
 						<>
 							<button onClick={() => setFilterActive(false)}>
@@ -40,7 +72,7 @@ export default function Header() {
 								<div className="relative rounded-s-md border-e border-e-slate-300">
 									<select
 										id="filterType"
-										className="h-full rounded-md rounded-e-none bg-slate-200 ps-8 hover:bg-slate-300"
+										className="h-full rounded-md rounded-e-none bg-blue-400 ps-8 text-slate-50 hover:bg-blue-500"
 										role="button"
 									>
 										<option value="">Todos</option>
@@ -49,7 +81,7 @@ export default function Header() {
 										<option value="phone">Telefone</option>
 									</select>
 									<Icon
-										className="absolute start-2 top-1/2 -translate-y-1/2 text-2xl text-slate-800"
+										className="absolute start-2 top-1/2 -translate-y-1/2 text-2xl text-slate-50"
 										icon="mdi:filter"
 									/>
 								</div>
@@ -58,8 +90,8 @@ export default function Header() {
 									className="w-full px-6 py-2 outline-offset-0"
 									placeholder="Pesquisar"
 								/>
-								<button className="rounded-md rounded-s-none border-s border-s-slate-300 bg-slate-200 px-3 py-2 hover:bg-slate-300">
-									<Icon className="text-2xl text-slate-800" icon="mdi:search" />
+								<button className="rounded-md rounded-s-none border-s border-s-slate-300 bg-blue-400 px-3 py-2 hover:bg-blue-500">
+									<Icon className="text-2xl text-slate-50" icon="mdi:search" />
 								</button>
 							</div>
 						</>
@@ -70,15 +102,22 @@ export default function Header() {
 					)}
 
 					<button
+						className="rounded-md border border-slate-50 px-6 py-2 text-slate-50 hover:bg-slate-50 hover:text-slate-800"
+						onClick={() => (openClosestRouteModal(), getClosestRoute())}
+					>
+						Ordem de Visitação
+					</button>
+
+					<button
 						className="rounded-md bg-blue-400 px-6 py-2 text-slate-50 hover:bg-blue-500"
-						onClick={openModal}
+						onClick={openAddModal}
 					>
 						Cadastrar
 					</button>
 				</div>
 			</header>
-			<Transition appear show={isModalOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-10" onClose={closeModal}>
+			<Transition appear show={isAddModalOpen} as={Fragment}>
+				<Dialog as="div" className="relative z-10" onClose={closeAddModal}>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"
@@ -194,12 +233,64 @@ export default function Header() {
 												<button
 													type="button"
 													className="rounded-md bg-red-500 px-6 py-2 text-slate-50 hover:bg-red-600"
-													onClick={closeModal}
+													onClick={closeAddModal}
 												>
 													Cancelar
 												</button>
 											</div>
 										</form>
+									</div>
+								</Dialog.Panel>
+							</Transition.Child>
+						</div>
+					</div>
+				</Dialog>
+			</Transition>
+			<Transition appear show={isClosestRouteModalOpen} as={Fragment}>
+				<Dialog as="div" className="relative z-10" onClose={closeClosestRouteModal}>
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<div className="fixed inset-0 bg-black/25" />
+					</Transition.Child>
+
+					<div className="fixed inset-0 overflow-y-auto">
+						<div className="flex min-h-full items-center justify-center p-4 text-center">
+							<Transition.Child
+								as={Fragment}
+								enter="ease-out duration-300"
+								enterFrom="opacity-0 scale-95"
+								enterTo="opacity-100 scale-100"
+								leave="ease-in duration-200"
+								leaveFrom="opacity-100 scale-100"
+								leaveTo="opacity-0 scale-95"
+							>
+								<Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
+									<Dialog.Title
+										as="h3"
+										className="flex items-center justify-between border-b p-4 text-lg font-medium leading-6 text-slate-900"
+									>
+										<div>Ordem de Visitação</div>
+										<button onClick={closeClosestRouteModal}>
+											<Icon icon="mdi:close" />
+										</button>
+									</Dialog.Title>
+									<div className="p-4">
+										<div className="grid grid-cols-4 items-center gap-4 rounded rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
+											<div>Nome</div>
+											<div>Email</div>
+											<div>Telefone</div>
+											<div>Coordenadas</div>
+										</div>
+										{clients.map((client) => (
+											<ClientInfo key={client.id} client={client} hideEditButton={true} />
+										))}
 									</div>
 								</Dialog.Panel>
 							</Transition.Child>
