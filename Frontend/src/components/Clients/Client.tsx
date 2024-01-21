@@ -4,14 +4,17 @@ export default function Client(props: {
 	name: string
 	email: string
 	phone: string
-	coordinates: number
+	coordinateX: number
+	coordinateY: number
 }) {
 	return (
 		<div className="grid grid-cols-5 items-center gap-4 border border-t-0 p-5 text-slate-800 last:rounded-b  hover:bg-slate-50/50">
 			<div className="line-clamp-1">{props.name}</div>
 			<div className="line-clamp-1">{props.email}</div>
 			<div className="line-clamp-1">{props.phone}</div>
-			<div className="line-clamp-1">({props.coordinates})</div>
+			<div className="line-clamp-1">
+				({props.coordinateX},{props.coordinateY})
+			</div>
 			<div className="justify-self-end rounded">
 				<div className="relative">
 					<button className="group relative rounded bg-indigo-500 p-2 hover:bg-indigo-600">

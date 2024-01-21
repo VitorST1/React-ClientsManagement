@@ -7,14 +7,16 @@ export default function List() {
 			name: "Vitor",
 			email: "vitor@email.com",
 			phone: "553299999999",
-			coordinates: 0.1,
+			coordinateX: 0,
+			coordinateY: 1,
 		},
 		{
 			id: 2,
 			name: "Nome",
 			email: "Email",
 			phone: "Telefone",
-			coordinates: 0.1,
+			coordinateX: 0,
+			coordinateY: 2,
 		},
 	]
 
@@ -32,7 +34,8 @@ export default function List() {
 					name={client.name}
 					email={client.email}
 					phone={client.phone}
-					coordinates={client.coordinates}
+					coordinateX={client.coordinateX}
+					coordinateY={client.coordinateY}
 				/>
 			))}
 		</div>
