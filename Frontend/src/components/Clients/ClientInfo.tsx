@@ -24,7 +24,14 @@ export default function ClientInfo(props: {
 		setIsEditModalOpen(true)
 	}
 
-	const closeEditModal = () => {
+	const closeEditModal = (setProperties: boolean = true) => {
+		if (setProperties) {
+			setName(client.name)
+			setEmail(client.email)
+			setPhone(client.phone)
+			setCoordinatex(client.coordinatex)
+			setCoordinatey(client.coordinatey)
+		}
 		setError("")
 		setIsEditModalOpen(false)
 	}
@@ -47,7 +54,8 @@ export default function ClientInfo(props: {
 			setUpdatingClient(false)
 
 			if (!resp.error) {
-				closeEditModal()
+				closeEditModal(false)
+				console.log(props.onEdit)
 				if (props.onEdit) props.onEdit()
 			} else {
 				setError(resp.error)
@@ -83,7 +91,7 @@ export default function ClientInfo(props: {
 				)}
 			</div>
 			<Transition appear show={isEditModalOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-10" onClose={closeEditModal}>
+				<Dialog as="div" className="relative z-10" onClose={() => closeEditModal(true)}>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"
@@ -209,7 +217,7 @@ export default function ClientInfo(props: {
 												<button
 													type="button"
 													className="rounded-md bg-red-500 px-6 py-2 text-slate-50 hover:bg-red-600"
-													onClick={closeEditModal}
+													onClick={() => closeEditModal(true)}
 												>
 													Cancelar
 												</button>

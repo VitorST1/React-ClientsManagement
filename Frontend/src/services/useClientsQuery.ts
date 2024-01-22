@@ -23,5 +23,5 @@ const fetchClients = async (type: string, search: string) => {
 export const useClientsQuery = (type: string, search: string) => 
     useQuery({
         queryKey: ["clients", type, search],
-        queryFn: () => fetchClients(type, search)
+        queryFn: () => fetchClients(type, search),
     })

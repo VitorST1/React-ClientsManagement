@@ -16,4 +16,5 @@ export const useVisitationOrderQuery = () =>
     useQuery({
         queryKey: ["visitationOrder"],
         queryFn: () => fetchVisitationOrder(),
+        enabled: false
     })
