@@ -35,7 +35,7 @@ Dentro da pasta frontend, siga os passos (rodando os comandos em um terminal):
     Com npm:  
     `npm run dev`
 
-4. Acesse a URL:
+4. Acesse a URL:  
     Após rodar o projeto, em caso de sucesso, a URL de acesso ao frontend aparecerá no terminal.  
     Geralmente o projeto é iniciado na porta 5173, porém, pode mudar caso a porta esteja ocupada.  
     Ex.: `http://localhost:5173`
