@@ -63,7 +63,6 @@ export default function Header(props: {
 			if (!name || isNaN(coordinatex) || isNaN(coordinatey)) return false
 
 			const resp = await createClient({ name, email, phone, coordinatex, coordinatey })
-			console.log({ resp })
 			setCreatingClient(false)
 
 			if (!resp.error) {

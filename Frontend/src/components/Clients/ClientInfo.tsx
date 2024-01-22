@@ -55,7 +55,6 @@ export default function ClientInfo(props: {
 
 			if (!resp.error) {
 				closeEditModal(false)
-				console.log(props.onEdit)
 				if (props.onEdit) props.onEdit()
 			} else {
 				setError(resp.error)
