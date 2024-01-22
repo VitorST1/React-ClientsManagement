@@ -3,18 +3,15 @@ import { Client } from "../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import { useState, Fragment, FormEvent } from "react"
 
-export default function ClientInfo(props: {
-	client: Client
-	hideEditButton?: boolean
-	onClientChange?: (client: Client) => void
-}) {
+// Contém as informações do cliente.
+export default function ClientInfo(props: { client: Client; hideEditButton?: boolean }) {
 	const client = props.client
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 	const [name, setName] = useState(client.name)
 	const [email, setEmail] = useState(client.email)
 	const [phone, setPhone] = useState(client.phone)
-	const [coordinateX, setCoordinateX] = useState(client.coordinateX)
-	const [coordinateY, setCoordinateY] = useState(client.coordinateY)
+	const [coordinatex, setCoordinatex] = useState(client.coordinatex)
+	const [coordinatey, setCoordinatey] = useState(client.coordinatey)
 
 	const openEditModal = () => {
 		setIsEditModalOpen(true)
@@ -26,18 +23,9 @@ export default function ClientInfo(props: {
 
 	const editClient = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		console.log({ name, email, phone, coordinateX, coordinateY })
-		if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
+		console.log({ name, email, phone, coordinatex, coordinatey })
+		if (!name || isNaN(coordinatex) || isNaN(coordinatey)) return false
 
-		if (props.onClientChange)
-			props.onClientChange({
-				...client,
-				name,
-				email,
-				phone,
-				coordinateX,
-				coordinateY,
-			})
 		closeEditModal()
 	}
 
@@ -50,7 +38,7 @@ export default function ClientInfo(props: {
 				<div className="line-clamp-1">{client.email}</div>
 				<div className="line-clamp-1">{client.phone}</div>
 				<div className="line-clamp-1">
-					({client.coordinateX},{client.coordinateY})
+					({client.coordinatex},{client.coordinatey})
 				</div>
 				{!props.hideEditButton && (
 					<div className="justify-self-end rounded">
@@ -145,38 +133,38 @@ export default function ClientInfo(props: {
 											<div className="flex gap-4">
 												<div>
 													<label
-														htmlFor="coordinateX"
+														htmlFor="coordinatex"
 														className="text-sm font-medium text-slate-800"
 													>
 														Coordenada X:
 													</label>
 													<input
 														type="number"
-														id="coordinateX"
+														id="coordinatex"
 														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="X"
 														min={0}
-														value={coordinateX}
+														value={coordinatex}
 														required
-														onChange={(e) => setCoordinateX(Number(e.target.value))}
+														onChange={(e) => setCoordinatex(Number(e.target.value))}
 													/>
 												</div>
 												<div>
 													<label
-														htmlFor="coordinateY"
+														htmlFor="coordinatey"
 														className="text-sm font-medium text-slate-800"
 													>
 														Coordenada Y:
 													</label>
 													<input
 														type="number"
-														id="coordinateY"
+														id="coordinatey"
 														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="Y"
 														min={0}
-														value={coordinateY}
+														value={coordinatey}
 														required
-														onChange={(e) => setCoordinateY(Number(e.target.value))}
+														onChange={(e) => setCoordinatey(Number(e.target.value))}
 													/>
 												</div>
 											</div>

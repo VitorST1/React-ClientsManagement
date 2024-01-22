@@ -3,6 +3,6 @@ export interface Client {
     name: string
     email: string
     phone: string
-    coordinateX: number
-    coordinateY: number
+    coordinatex: number
+    coordinatey: number
 }

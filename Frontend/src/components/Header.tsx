@@ -3,8 +3,16 @@ import { Icon } from "@iconify/react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Client } from "../types/types"
 import ClientInfo from "./Clients/ClientInfo"
+import { createClient } from "../services/createClient"
 
-export default function Header() {
+/*
+	Componente que contém o cabecalho.
+	Contém a barra de busca, um botão para obter a ordem de visitação dos clientes e um para adicionar um novo cliente.
+*/
+export default function Header(props: {
+	onSearch: (type: string, search: string) => void
+	onAdd: () => void
+}) {
 	const [filterActive, setFilterActive] = useState(false)
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 	const [isClosestRouteModalOpen, setIsClosestRouteModalOpen] = useState(false)
@@ -13,6 +21,10 @@ export default function Header() {
 	const [phone, setPhone] = useState("")
 	const [coordinateX, setCoordinateX] = useState(0)
 	const [coordinateY, setCoordinateY] = useState(0)
+	const [search, setSearch] = useState("")
+	const [searchType, setSearchType] = useState("")
+	const [error, setError] = useState("")
+	const [creatingClient, setCreatingClient] = useState(false)
 
 	const openAddModal = () => {
 		setIsAddModalOpen(true)
@@ -20,6 +32,12 @@ export default function Header() {
 
 	const closeAddModal = () => {
 		setIsAddModalOpen(false)
+		setName("")
+		setEmail("")
+		setPhone("")
+		setCoordinateX(0)
+		setCoordinateY(0)
+		setError("")
 	}
 
 	const openClosestRouteModal = () => {
@@ -30,14 +48,32 @@ export default function Header() {
 		setIsClosestRouteModalOpen(false)
 	}
 
-	const addClient = (event: FormEvent<HTMLFormElement>) => {
+	const addClient = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		console.log({ name, email, phone, coordinateX, coordinateY })
-		if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
-		closeAddModal()
+		if (!creatingClient) {
+			setCreatingClient(true)
+
+			// Caso o nome do cliente ou as coordenadas sejam inválidas, o cliente não será criado.
+			if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
+
+			const resp = await createClient({ name, email, phone, coordinateX, coordinateY })
+			setCreatingClient(false)
+
+			if (!resp.error) {
+				closeAddModal()
+				props.onAdd()
+			} else {
+				setError(resp.error)
+			}
+		}
 	}
 
 	const getClosestRoute = () => {}
+
+	const searchClients = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		props.onSearch(searchType, search)
+	}
 
 	const clients: Client[] = []
 
@@ -51,12 +87,13 @@ export default function Header() {
 							<button onClick={() => setFilterActive(false)}>
 								<Icon className="text-2xl text-slate-50 hover:text-slate-400" icon="mdi:close" />
 							</button>
-							<div className="flex rounded-md">
+							<form className="flex rounded-md" onSubmit={searchClients}>
 								<div className="relative rounded-s-md border-e border-e-slate-300">
 									<select
 										id="filterType"
 										className="h-full rounded-md rounded-e-none bg-blue-400 ps-8 text-slate-50 hover:bg-blue-500"
 										role="button"
+										onChange={(e) => setSearchType(e.target.value)}
 									>
 										<option value="">Todos</option>
 										<option value="name">Nome</option>
@@ -72,11 +109,12 @@ export default function Header() {
 									type="search"
 									className="w-full px-6 py-2 outline-offset-0"
 									placeholder="Pesquisar"
+									onChange={(e) => setSearch(e.target.value)}
 								/>
 								<button className="rounded-md rounded-s-none border-s border-s-slate-300 bg-blue-400 px-3 py-2 hover:bg-blue-500">
 									<Icon className="text-2xl text-slate-50" icon="mdi:search" />
 								</button>
-							</div>
+							</form>
 						</>
 					) : (
 						<button onClick={() => setFilterActive(true)}>
@@ -132,6 +170,7 @@ export default function Header() {
 										Cadastrar Cliente
 									</Dialog.Title>
 									<div className="p-4">
+										{error && <div className="text-center text-red-500">{error}</div>}
 										<form className="flex flex-col gap-4" onSubmit={addClient}>
 											<div>
 												<label htmlFor="name" className="text-sm font-medium text-slate-800">
@@ -210,6 +249,7 @@ export default function Header() {
 												<button
 													type="submit"
 													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600"
+													disabled={creatingClient}
 												>
 													Cadastrar
 												</button>

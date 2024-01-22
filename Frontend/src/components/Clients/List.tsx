@@ -1,37 +1,9 @@
-import { useState } from "react"
 import { Client } from "../../types/types"
 import ClientInfo from "./ClientInfo"
 
-export default function List() {
-	const [clients, setClients] = useState<Client[]>([
-		{
-			id: 1,
-			name: "Vitor",
-			email: "vitor@email.com",
-			phone: "553299999999",
-			coordinateX: 0,
-			coordinateY: 1,
-		},
-		{
-			id: 2,
-			name: "Nome",
-			email: "Email",
-			phone: "Telefone",
-			coordinateX: 0,
-			coordinateY: 2,
-		},
-	])
-
-	const handleClientChange = (newClient: Client) => {
-		const index = clients.findIndex((client) => client.id === newClient.id)
-		if (index !== -1) {
-			setClients((prevClients) => [
-				...prevClients.slice(0, index),
-				newClient,
-				...prevClients.slice(index + 1),
-			])
-		}
-	}
+// Lista de clientes.
+export default function List(props: { clients: Client[] }) {
+	const clients = props.clients
 
 	if (!clients.length)
 		return (
@@ -49,8 +21,8 @@ export default function List() {
 				<div>Coordenadas</div>
 				<div className="justify-self-end">Editar</div>
 			</div>
-			{clients.map((client) => (
-				<ClientInfo key={client.id} client={client} onClientChange={handleClientChange} />
+			{clients.map((client: Client) => (
+				<ClientInfo key={client.id} client={client} />
 			))}
 		</div>
 	)
