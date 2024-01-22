@@ -15,8 +15,8 @@ async function initializeDatabase() {
             name VARCHAR(100) NOT NULL,
             email VARCHAR(100),
             phone VARCHAR(15),
-            coordinateX NUMERIC NOT NULL,
-            coordinateY NUMERIC NOT NULL
+            coordinatex NUMERIC NOT NULL,
+            coordinatey NUMERIC NOT NULL
         )
     `)
 }
