@@ -38,5 +38,6 @@ Dentro da pasta backend, siga os passos (rodando os comandos em um terminal):
     Com npm:  
     `npm run dev`
 
-Pronto, em caso de sucesso, o servidor estará rodando na porta configurada e já pode ser utilizado.
+Pronto, em caso de sucesso, o servidor estará rodando na porta configurada e já pode ser utilizado.  
+**OBS.:**: Quando o servidor é iniciado, a tabela `clients` será criada automáticamente no banco de dados.
   
