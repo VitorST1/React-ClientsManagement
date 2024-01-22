@@ -4,7 +4,7 @@ Desenvolvido utilizando [Vite](https://vitejs.dev/), [React](https://reactjs.org
 
 ## Requisitos
 
-- Node.js
+- [Node.js](https://nodejs.org/en)
 
 ## Recomendações
 
@@ -14,7 +14,7 @@ Um gerenciador de pacotes rápido e que otimiza o espaço ocupado pelas dependê
 ## Como rodar
 
 O projeto foi feito utilizando `pnpm`, mas pode rodar também com `npm` (npm já vem instalado junto com o Node.js):  
-Dentro da pasta frontend, siga os passos:
+Dentro da pasta frontend, siga os passos (rodando os comandos em um terminal):
 
 1. Instale as dependências:  
     Com pnpm:  
@@ -34,3 +34,9 @@ Dentro da pasta frontend, siga os passos:
 
     Com npm:  
     `npm run dev`
+
+4. Acesse a URL:
+    Após rodar o projeto, em caso de sucesso, a URL de acesso ao frontend aparecerá no terminal.  
+    Geralmente o projeto é iniciado na porta 5173, porém, pode mudar caso a porta esteja ocupada.  
+    Ex.: `http://localhost:5173`
+  
