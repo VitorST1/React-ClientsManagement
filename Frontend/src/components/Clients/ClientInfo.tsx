@@ -198,7 +198,8 @@ export default function ClientInfo(props: {
 											<div className="flex gap-4">
 												<button
 													type="submit"
-													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600"
+													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600 disabled:bg-indigo-300"
+													disabled={updatingClient}
 												>
 													Editar
 												</button>

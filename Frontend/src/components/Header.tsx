@@ -57,6 +57,7 @@ export default function Header(props: {
 			if (!name || isNaN(coordinatex) || isNaN(coordinatey)) return false
 
 			const resp = await createClient({ name, email, phone, coordinatex, coordinatey })
+			console.log({ resp })
 			setCreatingClient(false)
 
 			if (!resp.error) {
@@ -248,7 +249,7 @@ export default function Header(props: {
 											<div className="flex gap-4">
 												<button
 													type="submit"
-													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600"
+													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600 disabled:bg-indigo-300"
 													disabled={creatingClient}
 												>
 													Cadastrar
