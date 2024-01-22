@@ -21,6 +21,10 @@ async function initializeDatabase() {
     `)
 }
 
+pool.on("connect", () => {
+    console.log("Connected to DB")
+})
+
 pool.on("error", (err) => {
     console.error("Error connecting to DB", err)
 })
