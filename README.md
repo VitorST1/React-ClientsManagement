@@ -1,6 +1,6 @@
 # React-ClientsManagement
 
-Repositório contendo projeto de teste de programação para a empresa Facilita Jurídico. O projeto consiste de um sistema onde é possível gerenciar os clientes de uma empresa de limpezas, desenvolvido utlizando React no frontend e Node.js e PostgreSQL no backend
+Repositório contendo projeto de teste de programação para a empresa Facilita Jurídico. O projeto consiste de um sistema onde é possível gerenciar os clientes de uma empresa de limpezas, desenvolvido utlizando React(v18.2.0) no frontend e Node.js(v18.2.0) e PostgreSQL(pgAdmin 4 v7.2) no backend
 
 ## Especificações do teste
 
