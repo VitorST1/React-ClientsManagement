@@ -58,7 +58,7 @@ export default function ClientInfo(props: {
 	return (
 		<>
 			<div
-				className={`grid items-center gap-4 border border-t-0 p-5 text-slate-800 last:rounded-b  hover:bg-slate-50/50 ${props.hideEditButton ? "grid-cols-4" : "grid-cols-5"}`}
+				className={`grid items-center gap-4 border border-t-0 p-5 text-slate-800 last:rounded-b-md  hover:bg-slate-50/50 ${props.hideEditButton ? "grid-cols-4" : "grid-cols-5"}`}
 			>
 				<div className="line-clamp-1">{client.name}</div>
 				<div className="line-clamp-1">{client.email}</div>
@@ -70,7 +70,7 @@ export default function ClientInfo(props: {
 					<div className="justify-self-end rounded">
 						<div className="relative">
 							<button
-								className="group relative rounded bg-indigo-500 p-2 hover:bg-indigo-600"
+								className="group relative rounded-md bg-indigo-500 p-2 hover:bg-indigo-600"
 								onClick={openEditModal}
 							>
 								<Icon className="text-2xl text-slate-50" icon="mdi:pencil-box-outline" />
@@ -198,9 +198,12 @@ export default function ClientInfo(props: {
 											<div className="flex gap-4">
 												<button
 													type="submit"
-													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600 disabled:bg-indigo-300"
+													className="flex items-center gap-2 rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600 disabled:bg-indigo-300"
 													disabled={updatingClient}
 												>
+													{updatingClient && (
+														<Icon icon="gg:spinner" className="animate-spin text-xl" />
+													)}
 													Editar
 												</button>
 												<button

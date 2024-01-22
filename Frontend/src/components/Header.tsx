@@ -249,9 +249,12 @@ export default function Header(props: {
 											<div className="flex gap-4">
 												<button
 													type="submit"
-													className="rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600 disabled:bg-indigo-300"
+													className="flex items-center gap-2 rounded-md bg-indigo-500 px-6 py-2 text-slate-50 hover:bg-indigo-600 disabled:bg-indigo-300"
 													disabled={creatingClient}
 												>
+													{creatingClient && (
+														<Icon icon="gg:spinner" className="animate-spin text-xl" />
+													)}
 													Cadastrar
 												</button>
 												<button
@@ -312,7 +315,7 @@ export default function Header(props: {
 											</div>
 										) : (
 											<>
-												<div className="grid grid-cols-4 items-center gap-4 rounded rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
+												<div className="grid grid-cols-4 items-center gap-4 rounded-md rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
 													<div>Nome</div>
 													<div>Email</div>
 													<div>Telefone</div>
