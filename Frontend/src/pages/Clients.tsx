@@ -39,7 +39,7 @@ export default function Clients() {
 		<>
 			<div className="flex max-h-screen flex-col">
 				<Header onSearch={handleSearch} onAdd={refetch} />
-				<List clients={clients} />
+				<List clients={clients} onEdit={refetch} />
 			</div>
 		</>
 	)

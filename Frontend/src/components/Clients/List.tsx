@@ -2,7 +2,7 @@ import { Client } from "../../types/types"
 import ClientInfo from "./ClientInfo"
 
 // Lista de clientes.
-export default function List(props: { clients: Client[] }) {
+export default function List(props: { clients: Client[]; onEdit?: () => void }) {
 	const clients = props.clients
 
 	if (!clients.length)
@@ -22,7 +22,7 @@ export default function List(props: { clients: Client[] }) {
 				<div className="justify-self-end">Editar</div>
 			</div>
 			{clients.map((client: Client) => (
-				<ClientInfo key={client.id} client={client} />
+				<ClientInfo key={client.id} client={client} onEdit={props.onEdit} />
 			))}
 		</div>
 	)

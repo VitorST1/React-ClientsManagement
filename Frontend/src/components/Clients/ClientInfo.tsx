@@ -2,9 +2,14 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import { Client } from "../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import { useState, Fragment, FormEvent } from "react"
+import { updateClient } from "../../services/updateClient"
 
 // Contém as informações do cliente.
-export default function ClientInfo(props: { client: Client; hideEditButton?: boolean }) {
+export default function ClientInfo(props: {
+	client: Client
+	hideEditButton?: boolean
+	onEdit?: () => void
+}) {
 	const client = props.client
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 	const [name, setName] = useState(client.name)
@@ -12,21 +17,42 @@ export default function ClientInfo(props: { client: Client; hideEditButton?: boo
 	const [phone, setPhone] = useState(client.phone)
 	const [coordinatex, setCoordinatex] = useState(client.coordinatex)
 	const [coordinatey, setCoordinatey] = useState(client.coordinatey)
+	const [error, setError] = useState("")
+	const [updatingClient, setUpdatingClient] = useState(false)
 
 	const openEditModal = () => {
 		setIsEditModalOpen(true)
 	}
 
 	const closeEditModal = () => {
+		setError("")
 		setIsEditModalOpen(false)
 	}
 
-	const editClient = (event: FormEvent<HTMLFormElement>) => {
+	const editClient = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		console.log({ name, email, phone, coordinatex, coordinatey })
-		if (!name || isNaN(coordinatex) || isNaN(coordinatey)) return false
+		if (!updatingClient) {
+			// Caso o nome do cliente ou as coordenadas sejam inválidas, o cliente não será atualizado.
+			if (!name || isNaN(coordinatex) || isNaN(coordinatey)) return false
 
-		closeEditModal()
+			const resp = await updateClient({
+				id: client.id,
+				name,
+				email,
+				phone,
+				coordinatex,
+				coordinatey,
+			})
+
+			setUpdatingClient(false)
+
+			if (!resp.error) {
+				closeEditModal()
+				if (props.onEdit) props.onEdit()
+			} else {
+				setError(resp.error)
+			}
+		}
 	}
 
 	return (
@@ -89,6 +115,7 @@ export default function ClientInfo(props: { client: Client; hideEditButton?: boo
 										Editar Cliente
 									</Dialog.Title>
 									<div className="p-4">
+										{error && <div className="text-center text-red-500">{error}</div>}
 										<form className="flex flex-col gap-4" onSubmit={editClient}>
 											<div>
 												<label htmlFor="name" className="text-sm font-medium text-slate-800">

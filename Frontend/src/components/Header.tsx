@@ -19,8 +19,8 @@ export default function Header(props: {
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
 	const [phone, setPhone] = useState("")
-	const [coordinateX, setCoordinateX] = useState(0)
-	const [coordinateY, setCoordinateY] = useState(0)
+	const [coordinatex, setCoordinatex] = useState(0)
+	const [coordinatey, setCoordinatey] = useState(0)
 	const [search, setSearch] = useState("")
 	const [searchType, setSearchType] = useState("")
 	const [error, setError] = useState("")
@@ -35,8 +35,8 @@ export default function Header(props: {
 		setName("")
 		setEmail("")
 		setPhone("")
-		setCoordinateX(0)
-		setCoordinateY(0)
+		setCoordinatex(0)
+		setCoordinatey(0)
 		setError("")
 	}
 
@@ -54,9 +54,9 @@ export default function Header(props: {
 			setCreatingClient(true)
 
 			// Caso o nome do cliente ou as coordenadas sejam inválidas, o cliente não será criado.
-			if (!name || isNaN(coordinateX) || isNaN(coordinateY)) return false
+			if (!name || isNaN(coordinatex) || isNaN(coordinatey)) return false
 
-			const resp = await createClient({ name, email, phone, coordinateX, coordinateY })
+			const resp = await createClient({ name, email, phone, coordinatex, coordinatey })
 			setCreatingClient(false)
 
 			if (!resp.error) {
@@ -212,36 +212,36 @@ export default function Header(props: {
 											<div className="flex gap-4">
 												<div>
 													<label
-														htmlFor="coordinateX"
+														htmlFor="coordinatex"
 														className="text-sm font-medium text-slate-800"
 													>
 														Coordenada X:
 													</label>
 													<input
 														type="number"
-														id="coordinateX"
+														id="coordinatex"
 														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="X"
 														min={0}
 														required
-														onChange={(e) => setCoordinateX(Number(e.target.value))}
+														onChange={(e) => setCoordinatex(Number(e.target.value))}
 													/>
 												</div>
 												<div>
 													<label
-														htmlFor="coordinateY"
+														htmlFor="coordinatey"
 														className="text-sm font-medium text-slate-800"
 													>
 														Coordenada Y:
 													</label>
 													<input
 														type="number"
-														id="coordinateY"
+														id="coordinatey"
 														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="Y"
 														min={0}
 														required
-														onChange={(e) => setCoordinateY(Number(e.target.value))}
+														onChange={(e) => setCoordinatey(Number(e.target.value))}
 													/>
 												</div>
 											</div>
