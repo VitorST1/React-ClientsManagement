@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.4.1",
+    "@types/pg": "^8.10.9",
+    "dotenv": "^16.3.2",
+    "hono": "^3.12.6",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "tsx": "^3.12.2"
+  }
+}
