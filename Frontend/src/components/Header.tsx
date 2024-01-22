@@ -1,9 +1,9 @@
 import { useState, Fragment, FormEvent } from "react"
 import { Icon } from "@iconify/react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Client } from "../types/types"
-import ClientInfo from "./Clients/ClientInfo"
 import { createClient } from "../services/createClient"
+import { useVisitationOrderQuery } from "../services/useVisitationOrderQuery"
+import ClosestRouteModalContent from "./Clients/ClosestRouteModalContent"
 
 /*
 	Componente que contém o cabecalho.
@@ -11,7 +11,7 @@ import { createClient } from "../services/createClient"
 */
 export default function Header(props: {
 	onSearch: (type: string, search: string) => void
-	onAdd: () => void
+	onAction: () => void
 }) {
 	const [filterActive, setFilterActive] = useState(false)
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -25,6 +25,12 @@ export default function Header(props: {
 	const [searchType, setSearchType] = useState("")
 	const [error, setError] = useState("")
 	const [creatingClient, setCreatingClient] = useState(false)
+	const {
+		data: clients,
+		error: clientsError,
+		isLoading: clientsIsLoading,
+		refetch,
+	} = useVisitationOrderQuery()
 
 	const openAddModal = () => {
 		setIsAddModalOpen(true)
@@ -62,21 +68,17 @@ export default function Header(props: {
 
 			if (!resp.error) {
 				closeAddModal()
-				props.onAdd()
+				props.onAction()
 			} else {
 				setError(resp.error)
 			}
 		}
 	}
 
-	const getClosestRoute = () => {}
-
 	const searchClients = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		props.onSearch(searchType, search)
 	}
-
-	const clients: Client[] = []
 
 	return (
 		<>
@@ -125,7 +127,7 @@ export default function Header(props: {
 
 					<button
 						className="rounded-md border border-slate-50 px-6 py-2 text-slate-50 hover:bg-slate-50 hover:text-slate-800"
-						onClick={() => (openClosestRouteModal(), getClosestRoute())}
+						onClick={() => (openClosestRouteModal(), refetch())}
 					>
 						Ordem de Visitação
 					</button>
@@ -151,7 +153,6 @@ export default function Header(props: {
 					>
 						<div className="fixed inset-0 bg-black/25" />
 					</Transition.Child>
-
 					<div className="fixed inset-0 overflow-y-auto">
 						<div className="flex min-h-full items-center justify-center p-4 text-center">
 							<Transition.Child
@@ -211,7 +212,7 @@ export default function Header(props: {
 												/>
 											</div>
 											<div className="flex gap-4">
-												<div>
+												<div className="w-full">
 													<label
 														htmlFor="coordinatex"
 														className="text-sm font-medium text-slate-800"
@@ -221,14 +222,14 @@ export default function Header(props: {
 													<input
 														type="number"
 														id="coordinatex"
-														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
+														className="w-full rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="X"
 														min={0}
 														required
 														onChange={(e) => setCoordinatex(Number(e.target.value))}
 													/>
 												</div>
-												<div>
+												<div className="w-full">
 													<label
 														htmlFor="coordinatey"
 														className="text-sm font-medium text-slate-800"
@@ -238,7 +239,7 @@ export default function Header(props: {
 													<input
 														type="number"
 														id="coordinatey"
-														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
+														className="w-full rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="Y"
 														min={0}
 														required
@@ -286,7 +287,6 @@ export default function Header(props: {
 					>
 						<div className="fixed inset-0 bg-black/25" />
 					</Transition.Child>
-
 					<div className="fixed inset-0 overflow-y-auto">
 						<div className="flex min-h-full items-center justify-center p-4 text-center">
 							<Transition.Child
@@ -309,23 +309,11 @@ export default function Header(props: {
 										</button>
 									</Dialog.Title>
 									<div className="p-4">
-										{!clients.length ? (
-											<div className="p-8 text-center text-slate-500">
-												Nenhum cliente encontrado!
-											</div>
-										) : (
-											<>
-												<div className="grid grid-cols-4 items-center gap-4 rounded-md rounded-b-none border bg-slate-50 px-5 py-3 font-semibold text-slate-800">
-													<div>Nome</div>
-													<div>Email</div>
-													<div>Telefone</div>
-													<div>Coordenadas</div>
-												</div>
-												{clients.map((client) => (
-													<ClientInfo key={client.id} client={client} hideEditButton={true} />
-												))}
-											</>
-										)}
+										<ClosestRouteModalContent
+											clients={clients}
+											error={clientsError}
+											isLoading={clientsIsLoading}
+										/>
 									</div>
 								</Dialog.Panel>
 							</Transition.Child>

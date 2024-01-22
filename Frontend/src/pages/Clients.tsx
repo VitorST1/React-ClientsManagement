@@ -9,18 +9,18 @@ export default function Clients() {
 	const [search, setSearch] = useState("")
 	const [searchType, setSearchType] = useState("")
 
+	// Obtendo os clientes
+	const { data: clients, error, isLoading, refetch } = useClientsQuery(searchType, search)
+
 	const handleSearch = (searchType: string, search: string) => {
 		setSearchType(searchType)
 		setSearch(search)
 	}
 
-	// Obtendo os clientes
-	const { data: clients, error, isLoading, refetch } = useClientsQuery(searchType, search)
-
 	if (isLoading)
 		return (
 			<div className="flex max-h-screen flex-col">
-				<Header onSearch={handleSearch} onAdd={refetch} />
+				<Header onSearch={handleSearch} onAction={refetch} />
 				<div className="flex justify-center p-8 text-4xl text-slate-500">
 					<Icon className="animate-spin" icon="gg:spinner" />
 				</div>
@@ -30,7 +30,7 @@ export default function Clients() {
 	if (error)
 		return (
 			<div className="flex max-h-screen flex-col">
-				<Header onSearch={handleSearch} onAdd={refetch} />
+				<Header onSearch={handleSearch} onAction={refetch} />
 				<div className="m-8 rounded-md border p-8 text-center text-slate-500">Algo deu errado!</div>
 			</div>
 		)
@@ -38,7 +38,7 @@ export default function Clients() {
 	return (
 		<>
 			<div className="flex max-h-screen flex-col">
-				<Header onSearch={handleSearch} onAdd={refetch} />
+				<Header onSearch={handleSearch} onAction={refetch} />
 				<List clients={clients} onEdit={refetch} />
 			</div>
 		</>

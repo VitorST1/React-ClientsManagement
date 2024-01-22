@@ -14,7 +14,6 @@ const fetchClients = async (type: string, search: string) => {
     const requestOptions = {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-        mode: "cors" as RequestMode,
     }
  
     const response = await fetch(url, requestOptions)

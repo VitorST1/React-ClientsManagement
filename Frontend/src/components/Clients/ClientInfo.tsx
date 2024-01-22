@@ -158,7 +158,7 @@ export default function ClientInfo(props: {
 												/>
 											</div>
 											<div className="flex gap-4">
-												<div>
+												<div className="w-full">
 													<label
 														htmlFor="coordinatex"
 														className="text-sm font-medium text-slate-800"
@@ -168,7 +168,7 @@ export default function ClientInfo(props: {
 													<input
 														type="number"
 														id="coordinatex"
-														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
+														className="w-full rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="X"
 														min={0}
 														value={coordinatex}
@@ -176,7 +176,7 @@ export default function ClientInfo(props: {
 														onChange={(e) => setCoordinatex(Number(e.target.value))}
 													/>
 												</div>
-												<div>
+												<div className="w-full">
 													<label
 														htmlFor="coordinatey"
 														className="text-sm font-medium text-slate-800"
@@ -186,7 +186,7 @@ export default function ClientInfo(props: {
 													<input
 														type="number"
 														id="coordinatey"
-														className="rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
+														className="w-full rounded-md border border-slate-300 bg-slate-50 p-2.5 text-slate-800 focus:border-blue-500 focus:ring-blue-500"
 														placeholder="Y"
 														min={0}
 														value={coordinatey}
